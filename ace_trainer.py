@@ -20,6 +20,8 @@ from dataset import CamLocDataset
 import ace_vis_util as vutil
 from ace_visualizer import ACEVisualizer
 
+import os
+
 _logger = logging.getLogger(__name__)
 
 
@@ -482,5 +484,6 @@ class TrainerACE:
         head_state_dict = self.regressor.heads.state_dict()
         for k, v in head_state_dict.items():
             head_state_dict[k] = head_state_dict[k].half()
+        os.makedirs(os.path.dirname(self.options.output_map_file), exist_ok=True)
         torch.save(head_state_dict, self.options.output_map_file)
         _logger.info(f"Saved trained head weights to: {self.options.output_map_file}")
