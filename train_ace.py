@@ -8,15 +8,14 @@ from pathlib import Path
 
 from ace_trainer import TrainerACE
 
+import os
+
 
 def _strtobool(x):
     return bool(strtobool(x))
 
 
 if __name__ == '__main__':
-
-    # Setup logging levels.
-    logging.basicConfig(level=logging.INFO)
 
     parser = argparse.ArgumentParser(
         description='Fast training of a scene coordinate regression network.',
@@ -122,6 +121,12 @@ if __name__ == '__main__':
                         help='zoom out of the scene by moving render camera backwards, in meters')
 
     options = parser.parse_args()
+
+    # Setup logging levels.
+    save_dir = os.path.dirname(options.output_map_file)
+    os.makedirs(save_dir, exist_ok=True)
+    logging.basicConfig(level=logging.INFO,
+                        filename=f"{save_dir}/log.txt")
 
     trainer = TrainerACE(options)
     trainer.train()
