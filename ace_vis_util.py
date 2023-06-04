@@ -510,7 +510,7 @@ def get_point_cloud_from_network(network, data_loader, filter_depth):
     # return merged frame points
     return pc_xyz, pc_clr
 
-def get_rendering_target_path(target_base_path, map_file_name):
+def get_rendering_target_path(target_base_path):
     """
     Infer a folder for renderings from a base path and a map name.
 
@@ -520,10 +520,7 @@ def get_rendering_target_path(target_base_path, map_file_name):
     @param map_file_name: Map file name to infer folder name for renderings of this mapping run.
     @return: path to store renderings
     """
-    target_path = map_file_name  # infer rendering folder from map file name
-    target_path = os.path.basename(target_path)  # extract file name
-    target_path = os.path.splitext(target_path)[0]  # remove extension
-    target_path = target_base_path / target_path
+    target_path = target_base_path / "rendering"
 
     os.makedirs(target_path, exist_ok=True)
 

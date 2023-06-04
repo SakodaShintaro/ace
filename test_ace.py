@@ -72,9 +72,6 @@ if __name__ == '__main__':
     parser.add_argument('--render_visualization', type=_strtobool, default=False,
                         help='create a video of the mapping process')
 
-    parser.add_argument('--render_target_path', type=Path, default='renderings',
-                        help='target folder for renderings, visualizer will create a subfolder with the map name')
-
     parser.add_argument('--render_flipped_portrait', type=_strtobool, default=False,
                         help='flag for wayspots dataset where images are sideways portrait')
 
@@ -159,8 +156,7 @@ if __name__ == '__main__':
     if opt.render_visualization:
         # infer rendering folder from map file name
         target_path = vutil.get_rendering_target_path(
-            opt.render_target_path,
-            opt.network)
+            Path(opt.network).parent)
         ace_visualizer = ACEVisualizer(target_path,
                                        opt.render_flipped_portrait,
                                        opt.render_map_depth_filter,
